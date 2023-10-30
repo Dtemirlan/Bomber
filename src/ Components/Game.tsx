@@ -6,18 +6,19 @@ import ResetButton from './ResetButton';
 const createItems = (): { hasItem: boolean; clicked: boolean }[] => {
     const gridSize = 6;
     const totalCells = gridSize * gridSize;
+    const targetIndex = Math.floor(Math.random() * totalCells);
 
-    const emptyCells: { hasItem: boolean; clicked: boolean }[] = Array(totalCells).fill({
+    const items: { hasItem: boolean; clicked: boolean }[] = Array(totalCells).fill({
         hasItem: false,
         clicked: false,
     });
 
-    const targetIndex = Math.floor(Math.random() * totalCells);
+    items[targetIndex].hasItem = true;
 
-    emptyCells[targetIndex].hasItem = true;
-
-    return emptyCells;
+    return items;
 };
+
+
 
 const Game: React.FC = () => {
     const [items, setItems] = useState(createItems());
