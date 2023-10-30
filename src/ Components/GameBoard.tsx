@@ -1,18 +1,23 @@
+// GameBoard.tsx
+
 import React from 'react';
-import Cell from './ Cell';
-import '../GameBoard.css';
+import '../GameBoard.css'; // Путь к файлу стилей GameBoard.css
 
 interface GameBoardProps {
-    items: { hasItem: boolean; clicked: boolean }[];
-    onCellClick: (index: number) => void;
+    targetFound: boolean;
+    onCellClick: () => void;
 }
 
-const GameBoard: React.FC<GameBoardProps> = ({ items, onCellClick }) => {
+const GameBoard: React.FC<GameBoardProps> = ({ targetFound, onCellClick }) => {
     return (
         <div className="game-board">
-            {items.map((item, index) => (
-                <Cell key={index} item={item} onClick={() => onCellClick(index)} />
-            ))}
+            {targetFound ? (
+                <div className="cell target">O</div>
+            ) : (
+                <div className="cell" onClick={onCellClick}>
+                    {/* Пустой текст или другие символы, если нужно */}
+                </div>
+            )}
         </div>
     );
 };

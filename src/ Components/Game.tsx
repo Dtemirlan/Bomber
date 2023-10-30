@@ -1,52 +1,31 @@
+// Game.tsx
+
 import React, { useState } from 'react';
-import GameBoard from './GameBoard';
-import Counter from './Counter.tsx';
-import ResetButton from './ResetButton';
-
-const createItems = (): { hasItem: boolean; clicked: boolean }[] => {
-    const gridSize = 6;
-    const totalCells = gridSize * gridSize;
-    const targetIndex = Math.floor(Math.random() * totalCells);
-
-    const items: { hasItem: boolean; clicked: boolean }[] = Array(totalCells).fill({
-        hasItem: false,
-        clicked: false,
-    });
-
-    items[targetIndex].hasItem = true;
-
-    return items;
-};
-
-
+import GameBoard from './GameBoard'; // Путь к компоненту GameBoard
 
 const Game: React.FC = () => {
-    const [items, setItems] = useState(createItems());
-    const [attempts, setAttempts] = useState<number>(0);
+    const [targetFound, setTargetFound] = useState(false);
 
-    const handleCellClick = (index: number): void => {
-        const updatedItems = [...items];
-        updatedItems[index].clicked = true;
-
-        if (updatedItems[index].hasItem) {
-            setAttempts(attempts + 1);
-        }
-
-        setItems(updatedItems);
+    const handleCellClick = () => {
+        // Логика обработки клика на клетке
+        // Устанавливает targetFound в true, если цель (кольцо) найдена
+        setTargetFound(true);
     };
 
-    const handleReset = (): void => {
-        const newItems = createItems();
-        setItems(newItems);
-        setAttempts(0);
+    const handleResetClick = () => {
+        // Логика сброса игры
+        // Устанавливает targetFound в false и выполняет другие действия, если необходимо
+        setTargetFound(false);
     };
 
     return (
         <div className="game-container">
-            <h2>Hidden Item Game</h2>
-            <GameBoard items={items} onCellClick={handleCellClick} />
-            <Counter attempts={attempts} />
-            <ResetButton onReset={handleReset} />
+            <h1>Игра нахождения цели</h1>
+            <GameBoard targetFound={targetFound} onCellClick={handleCellClick} />
+            <div className="attempts-counter">Попытки: 0</div>
+            <button className="reset-button" onClick={handleResetClick}>
+                Сбросить игру
+            </button>
         </div>
     );
 };
